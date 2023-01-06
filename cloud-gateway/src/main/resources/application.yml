@@ -11,20 +11,20 @@ spring:
           uri: lb://USER-SERVICES
           predicates:
             - Path=/MicroService2/user/**
-#          filters:
-#            - name: CircuitBreaker
-#              args:
-#                name: USER-SERVICES
-#                fallbackuri: forward:/userServiceFallBack
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: USER-SERVICES
+                fallbackuri: forward:/userServiceFallBack
         - id: DEPARTMENT-SERVICES
           uri: lb://DEPARTMENT-SERVICES
           predicates:
             - Path=/MicroService1/department/**
-#          filters:
-#            - name: CircuitBreaker
-#              args:
-#                name: DEPARTMENT-SERVICES
-#                fallbackuri: forward:/departmentServiceFallBack
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: DEPARTMENT-SERVICES
+                fallbackuri: forward:/departmentServiceFallBack
                 
 hystrix:
   command:
@@ -32,15 +32,14 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 400000
+            timeoutInMilliseconds: 4000
 
 management:
   endpoints:
     web:
       exposure:
         include: hystrix.stream
-  security:
-    enabled: false
+
         
 eureka:
   client:
@@ -50,5 +49,4 @@ eureka:
     register-with-eureka: true
   instance:
     hostname: localhost
-  server:
-    peer-node-read-timeout-ms: 30000000
+
